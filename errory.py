@@ -1,7 +1,8 @@
 #! python3
-# errory.py - The just enough python script to evaluate your programming assignments
+# errory.py - The quick and dirty python script to evaluate your programming assignments
 
 import zipfile,sys,subprocess,os,re
+from shlex import quote
 
 pgm=zipfile.ZipFile(sys.argv[1])
 tst=zipfile.ZipFile(sys.argv[2])
@@ -13,7 +14,7 @@ tst.extractall("./archive")
 subprocess.run("mkdir compile",shell=True)
 subprocess.run("mkdir out",shell=True)
 r="error_"+sys.argv[1][0:6]
-subprocess.run("mkdir "+r,shell=True)
+subprocess.run("mkdir "+quote(r),shell=True)
 fc=open("./"+r+"/compile_error_"+sys.argv[1][0:6]+".txt",'a')
 fr=open("./"+r+"/runtime_error_"+sys.argv[1][0:6]+".txt",'a')
 ft=open("./"+r+"/testcase_mismatch_"+sys.argv[1][0:6]+".txt",'a')
@@ -24,7 +25,7 @@ ft.truncate(0)
 
 
 for files in os.listdir("./"+sys.argv[1][:-4]):
-    l=subprocess.run("gcc "+sys.argv[1][:-4]+"/"+files+" -o ./compile/"+files[:-2],shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    l=subprocess.run("gcc "+quote(sys.argv[1][:-4])+"/"+files+" -o ./compile/"+files[:-2],shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     if l.stderr.decode("utf-8")!="":
         str=l.stderr.decode("utf-8")
         
@@ -61,7 +62,7 @@ ft.close()
 
 try:
      if sys.argv[3]=='d':
-        subprocess.run("rm -r archive compile out "+sys.argv[1][:-4],shell=True)
+        subprocess.run("rm -r archive compile out "+quote(sys.argv[1][:-4]),shell=True)
 
 except IndexError:
     pass
