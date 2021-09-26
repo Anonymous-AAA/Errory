@@ -16,6 +16,7 @@ I have tested the script on WSL, similar behavior is expected on Linux and Cygwi
 
 * Download errory.py
 * Place the script in the same folder as the zip files
+* The program zip file should be according to the conventions provided by the evaluators.
 * You can place the files in different folder, but then you would have to give the directory path instead of the file name in the command
 
 ### Executing program
