@@ -20,7 +20,7 @@ I have tested the script on WSL, similar behavior is expected on Linux and Cygwi
 
 ### Executing program
 
-* ASSGX_ROLLNO_FIRSTNAME.zip - Zip file containing c code (The filename should be according to the naming convention provided)
+* ASSGX_ROLLNO_FIRSTNAME.zip - Zip file containing c code (The filename should be according to the naming convention provided,X is any number)
 * Testcases.zip - Zip file containing test cases
 * d(optional)-Delete the decompressed and temporary files
 ```
