@@ -1,2 +1,55 @@
 # Errory
-Errory is the just enough python script to evaluate your  programming assignments. Just give your  zipped assignment and testcases files, it gives the error reports of mismatching test cases and compilation errors.
+Errory is the just enough python script to evaluate your  programming assignments. Just give your  zipped assignment and testcases file, it gives the error reports of mismatching test cases and compilation errors.
+
+
+
+
+## Getting Started
+
+### Requirements
+
+* Linux/WSL(Windows Subsystem for Linux)/Cygwin Terminal
+* Python 3
+
+I have tested the script on WSL, similar behavior is expected on Linux and Cygwin.
+### Setting Up
+
+* Download errory.py
+* Place the script in the same folder as the zip files
+* You can place the files in different folder, but then you would have to give the directory path instead of the file name in the command
+
+### Executing program
+
+* ASSGX_ROLLNO_FIRSTNAME.zip - Zip file containing c code
+* Testcases.zip - Zip file containing test cases
+* d(optional)-Delete the decompressed and temporary files
+```
+python3 errory.py ASSGX_ROLLNO_FIRSTNAME.zip Testcases.zip d
+```
+
+## Output
+
+Output files are generated only if there are compilation errors or mismatching testcases. Compilation errors and Mismatching testcases are stored in different files in the same folder. Mismatching testcases output file is actually the output of the diff command in Linux. To understand the output refer to a tutorial like this [one](https://www.geeksforgeeks.org/diff-command-linux-examples/).
+
+## Improvements to be done
+* To record Runtime errors in a seperate file
+
+
+## Authors
+
+
+ Alen Antony  
+
+
+## Version History
+
+
+* 0.1
+    * Initial Release
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+
+## License
+
+This project is licensed under the GNU GPLv3 License - see the LICENSE.md file for details
