@@ -1,5 +1,5 @@
 # Errory
-Errory is the just enough python script to evaluate your  programming assignments. Just give your  zipped assignment and testcases file, it gives the error reports of mismatching test cases and compilation errors.
+Errory is a quick and dirty python script to evaluate your  programming assignments. Just give your  zipped assignment and testcases file, it gives the error reports of mismatching test cases,compilation and runtime  errors.
 
 
 
@@ -29,10 +29,10 @@ python3 errory.py ASSGX_ROLLNO_FIRSTNAME.zip Testcases.zip d
 
 ## Output
 
-Output files are generated only if there are compilation errors or mismatching testcases. Compilation errors and Mismatching testcases are stored in different files in the same folder. Mismatching testcases output file is actually the output of the diff command in Linux. To understand the output refer to a tutorial like this [one](https://www.geeksforgeeks.org/diff-command-linux-examples/).
+Output files are generated only if there are compilation,runtime errors or mismatching testcases. Compilation errors,Runtime errors and Mismatching testcases are stored in different files in the same folder. Mismatching testcases output file is actually the output of the diff command in Linux. To understand the output refer to a tutorial like this [one](https://www.geeksforgeeks.org/diff-command-linux-examples/).
 
 ## Improvements to be done
-* To record Runtime errors in a seperate file
+* Suggest some improvements and collaborate
 
 
 ## Authors
@@ -46,8 +46,13 @@ Output files are generated only if there are compilation errors or mismatching t
 
 * 0.1
     * Initial Release
+* 0.2
+    * Added Runtime error reporting
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## Disclaimer
+The project is under development , if you find some error or unexpected behaviour please contact at alenantonyme@gmail.com
 
 
 ## License
