@@ -29,7 +29,7 @@ python3 errory.py ASSGX_ROLLNO_FIRSTNAME.zip Testcases.zip d
 
 ## Output
 
-Output files are generated only if there are compilation,runtime errors or mismatching testcases. Compilation errors,Runtime errors and Mismatching testcases are stored in different files in the same folder. Mismatching testcases output file is actually the output of the diff command in Linux. To understand the output refer to a tutorial like this [one](https://www.geeksforgeeks.org/diff-command-linux-examples/).
+Compilation errors,Runtime errors and Mismatching testcases are stored in different files in the same subfolder. Mismatching testcases output file is actually the output of the diff command in Linux. To understand the output refer to a tutorial like this [one](https://www.geeksforgeeks.org/diff-command-linux-examples/).
 
 ## Improvements to be done
 * Suggest some improvements and collaborate
@@ -48,11 +48,13 @@ Output files are generated only if there are compilation,runtime errors or misma
     * Initial Release
 * 0.2
     * Added Runtime error reporting
+    * Reports stored in a subfolder
+    * Report overwrite issue resolved
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## Disclaimer
-The project is under development , if you find some error or unexpected behaviour please contact at alenantonyme@gmail.com
+The project is under development , if you find some error or unexpected behaviour please contact me at alenantonyme@gmail.com
 
 
 ## License
