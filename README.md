@@ -32,7 +32,7 @@ python3 errory.py ASSGX_ROLLNO_FIRSTNAME.zip Testcases.zip d
 
 Compilation errors,Runtime errors and Mismatching testcases are stored in different files in the same subfolder. Mismatching testcases output file is actually the output of the diff command in Linux. To understand the output refer to a tutorial like this [one](https://www.geeksforgeeks.org/diff-command-linux-examples/). The decompressed and temporary files are kept intact if option 'd' is not given.You would have to manually delete these folders when you are executing the program again.
 
-## Note
+## Important Note
 ### When  the program is executed again:
 * Ensure that you have deleted the previous error folder with its contents
 * Delete the decompressed and temporary files if you haven't given the option 'd' , last time
