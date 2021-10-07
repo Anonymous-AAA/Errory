@@ -1,4 +1,5 @@
 # Errory
+Tired of executing testcases one by one for your assignment🤨 Here's a solution for that.
 Errory is a quick and dirty python script to evaluate your  programming assignments. Just give your  zipped assignment and testcases file, it gives the error reports of mismatching test cases,compilation and runtime  errors.
 
 
@@ -10,6 +11,7 @@ Errory is a quick and dirty python script to evaluate your  programming assignme
 
 * Linux/WSL(Windows Subsystem for Linux)/Cygwin Terminal
 * Python 3
+* GNU C Compiler (GCC)
 
 I have tested the script on WSL, similar behavior is expected on Linux and Cygwin.
 ### Setting Up
