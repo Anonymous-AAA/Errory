@@ -1,5 +1,5 @@
 # Errory
-Tired of executing testcases one by one for your assignment🤨 Here's a solution for that.
+## Tired of executing testcases one by one for your assignment🤨 Here's a solution for that.
 Errory is a quick and dirty python script to evaluate your  programming assignments. Just give your  zipped assignment and testcases file, it gives the error reports of mismatching test cases,compilation and runtime  errors.
 
 
