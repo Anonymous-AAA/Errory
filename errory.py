@@ -42,6 +42,7 @@ for files in os.listdir("./compile"):
                 m=subprocess.run("./compile/"+files+"<"+foldername.replace(" ", "\\ ")+"/"+fil+">./out/q"+files[-1]+"/out"+fil[2]+".txt",shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
                 if m.stderr.decode("utf-8")!="":
                         
+                        subprocess.run("rm ./out/q"+files[-1]+"/out"+fil[2]+".txt",shell=True)
                         fr.write(os.path.basename(foldername)+" TestCase"+fil[-5]+"\n")
                         fr.write(m.stderr.decode("utf-8")+"\n\n")
 
