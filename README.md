@@ -36,8 +36,8 @@ Compilation errors,Runtime errors and Mismatching testcases are stored in differ
 
 ## Important Note
 ### When  the program is executed again:
-* Ensure that you have deleted the previous error folder with its contents
-* Delete the decompressed and temporary files if you haven't given the option 'd' , last time
+* Ensure that you have deleted the previous error folder with its contents.
+* Delete the decompressed and temporary files if you haven't given the option 'd' last time you executed.
 
 ## Improvements to be done
 * Suggest some improvements and collaborate
@@ -58,6 +58,9 @@ Compilation errors,Runtime errors and Mismatching testcases are stored in differ
     * Added Runtime error reporting
     * Reports stored in a subfolder
     * Report overwrite issue resolved
+* 0.3
+    * Fixed some bugs
+    * Mini report on the output terminal
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
