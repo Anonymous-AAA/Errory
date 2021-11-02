@@ -37,6 +37,19 @@ python3 errory.py ASSGX_ROLLNO_FIRSTNAME.zip Testcases.zip d
 
 Compilation errors,Runtime errors(Along with timeout errors) and Mismatching testcases are stored in different files in the same subfolder. Mismatching testcases output file is actually the output of the diff command in Linux. To understand the output refer to a tutorial like this [one](https://www.geeksforgeeks.org/diff-command-linux-examples/).
 
+### Sample Output
+```
+Starting Execution 
+The options set are: 
+Timeout: 30 seconds  
+Delete: True
+Generating Report....
+
+Checking complete with 0 Compile errors, 4 Runtime errors(0 Timeout errors) and 0 Test case mismatches
+Check "error_ASSG5_" folder for detailed report
+Happy Coding :)
+```
+
 
 
 ## Improvements to be done
