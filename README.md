@@ -25,19 +25,19 @@ I have tested the script on WSL, similar behavior is expected on Linux and Cygwi
 
 * ASSGX_ROLLNO_FIRSTNAME.zip - Zip file containing c code (The filename should be according to the naming convention provided,X is any number)
 * Testcases.zip - Zip file containing test cases
-* d(optional)-Delete the decompressed and temporary files
+* Two options are given inside the python script file which the users can change :Timeout and Delete
+* Timeout : Stops execution of the program if it takes more than Timeout seconds to execute.This is considered as a runtime error as an occurence of non terminating program.
+* Delete : If the option is set to True  it deletes the temporary files after execution, anything else will retain it.Please delete these files for every execution if you are thinking to retain it.
+
 ```
 python3 errory.py ASSGX_ROLLNO_FIRSTNAME.zip Testcases.zip d
 ```
 
 ## Output
 
-Compilation errors,Runtime errors and Mismatching testcases are stored in different files in the same subfolder. Mismatching testcases output file is actually the output of the diff command in Linux. To understand the output refer to a tutorial like this [one](https://www.geeksforgeeks.org/diff-command-linux-examples/). The decompressed and temporary files are kept intact if option 'd' is not given.You would have to manually delete these folders when you are executing the program again.
+Compilation errors,Runtime errors(Along with timeout errors) and Mismatching testcases are stored in different files in the same subfolder. Mismatching testcases output file is actually the output of the diff command in Linux. To understand the output refer to a tutorial like this [one](https://www.geeksforgeeks.org/diff-command-linux-examples/).
 
-## Important Note
-### When  the program is executed again:
-* Ensure that you have deleted the previous error folder with its contents.
-* Delete the decompressed and temporary files if you haven't given the option 'd' last time you executed.
+
 
 ## Improvements to be done
 * Suggest some improvements and collaborate
@@ -61,6 +61,10 @@ Compilation errors,Runtime errors and Mismatching testcases are stored in differ
 * 0.3
     * Fixed some bugs
     * Mini report on the output terminal
+* 0.4
+    * The program now handles non terminating programs
+    * Timeout and Delete options added
+    * Error folder need not be deleted for every execution
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
