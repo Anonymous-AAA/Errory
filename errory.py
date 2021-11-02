@@ -4,7 +4,11 @@
 import zipfile,sys,subprocess,os,re
 from shlex import quote
 
-print("Starting Execution")
+#Options 
+Timeout=30 #Stops execution of the program if it takes more than Timeout seconds to execute.This is considered as a runtime error as an occurence of non terminating program
+Delete=True   #Option True deletes the temporary files after execution, anything else will retain it.Please delete these files for every execution if you are thinking to retain it.
+
+print(f"Starting Execution \nThe options set are:\nTimeout: {Timeout} seconds\nDelete: {Delete}\nGenerating Report....\n")
 pgm=zipfile.ZipFile(sys.argv[1])
 tst=zipfile.ZipFile(sys.argv[2])
 reg=re.compile(r'in')
@@ -14,10 +18,11 @@ tst.extractall("./archive")
 c=0
 ru=0
 t=0
+t_O=0
 subprocess.run("mkdir compile",shell=True)
 subprocess.run("mkdir out",shell=True)
 r="error_"+sys.argv[1][0:6]
-subprocess.run("mkdir "+quote(r),shell=True)
+subprocess.run("mkdir "+quote(r),shell=True,stderr=subprocess.PIPE)
 fc=open("./"+r+"/compile_error_"+sys.argv[1][0:6]+".txt",'a')
 fr=open("./"+r+"/runtime_error_"+sys.argv[1][0:6]+".txt",'a')
 ft=open("./"+r+"/testcase_mismatch_"+sys.argv[1][0:6]+".txt",'a')
@@ -42,7 +47,15 @@ for files in os.listdir("./compile"):
     for  foldername,subfolders,filenames in os.walk("./archive"):
         for fil in filenames:
             if re.match(reg,fil) and os.path.basename(foldername)=="q"+files[-1]:
-                m=subprocess.run("./compile/"+files+"<"+foldername.replace(" ", "\\ ")+"/"+fil+">./out/q"+files[-1]+"/out"+fil[2]+".txt",shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+                try:
+                    m=subprocess.run("./compile/"+files+"<"+foldername.replace(" ", "\\ ")+"/"+fil+">./out/q"+files[-1]+"/out"+fil[2]+".txt",shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=Timeout)
+                except subprocess.TimeoutExpired:
+                    ru+=1
+                    t_O+=1
+                    subprocess.run("rm ./out/q"+files[-1]+"/out"+fil[2]+".txt",shell=True)
+                    fr.write(os.path.basename(foldername)+" TestCase"+fil[-5]+"\n")
+                    fr.write(f"Program might have run into an infinite loop or it needs more than {Timeout} seconds to execute.Try changing the Timeout variable in errory.py or check for non terminating code.\n\n")
+                    continue
                 if m.stderr.decode("utf-8")!="":
                         ru+=1
                         subprocess.run("rm ./out/q"+files[-1]+"/out"+fil[2]+".txt",shell=True)
@@ -65,14 +78,14 @@ for  foldername,subfolders,filenames in os.walk("./out"):
 ft.close()
 
 try:
-     if sys.argv[3]=='d':
+     if Delete==True:
         subprocess.run("rm -r archive compile out "+quote(sys.argv[1][:-4]),shell=True)
 
 except IndexError:
     pass
 
 
-print(f'Checking complete with {c} Compile errors, {ru} Runtime errors and {t} Test case mismatches')
+print(f'Checking complete with {c} Compile errors, {ru} Runtime errors({t_O} Timeout errors) and {t} Test case mismatches')
 print(f'Check "{r}" folder for detailed report')
-print("IMPORTANT:Please delete the generated files if you are running the code again\nHappy Coding :)")
+print("Happy Coding :)")
 
