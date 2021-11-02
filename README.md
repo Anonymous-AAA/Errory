@@ -30,7 +30,7 @@ I have tested the script on WSL, similar behavior is expected on Linux and Cygwi
 * Delete : If the option is set to True  it deletes the temporary files after execution, anything else will retain it.Please delete these files for every execution if you are thinking to retain it.
 
 ```
-python3 errory.py ASSGX_ROLLNO_FIRSTNAME.zip Testcases.zip d
+python3 errory.py ASSG5_ROLLNO_FIRSTNAME.zip Testcases.zip
 ```
 
 ## Output
