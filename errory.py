@@ -5,9 +5,9 @@ import zipfile,sys,subprocess,os,re,shutil
 from shlex import quote
 
 #Options 
-TIMEOUT=30 #Stops execution of the program if it takes more than TIMEOUT seconds to execute.This is considered as a runtime error as an occurence of non terminating program
+TIMEOUT=30 #seconds      #Stops execution of the program if it takes more than TIMEOUT seconds to execute.This is considered as a runtime error as an occurence of non terminating program
 DELETE_TEMP_FILES=True   #Option True deletes the temporary files after execution, option False will retain the temporary files
-USE_GDB=True #Use GDB for extra Runtime error info
+USE_GDB=True             #Use GDB for extra Runtime error info
 
 print(f"Starting Execution \nThe options set are:\nTIMEOUT: {TIMEOUT} seconds\nDELETE_TEMP_FILES: {DELETE_TEMP_FILES}\nUSE_GDB: {USE_GDB}\nGenerating Report....\n")
 pgm=zipfile.ZipFile(sys.argv[1])
@@ -59,7 +59,9 @@ for files in os.listdir(f"./{r}/temp/compile"):
             if re.match(reg,fil) and os.path.basename(foldername)=="q"+files[-1]:
                 try:
                     rep=foldername.replace(" ", "\\ ")
-                    m=subprocess.run(f"./{r}/temp/compile/{files}<{rep}/{fil}>./{r}/temp/out/q{files[-1]}/out{fil[2]}.txt",shell=True,stderr=subprocess.PIPE,timeout=TIMEOUT)
+                    P=os.path.abspath(f"./{r}/temp/compile/{files}")
+                    Q=os.path.abspath(f"./{r}/temp/out/q{files[-1]}/out{fil[2]}.txt")
+                    m=subprocess.run(f"(cd {rep}  &&  exec {P}<./{fil}>{Q})",shell=True,stderr=subprocess.PIPE,timeout=TIMEOUT)
                 except subprocess.TimeoutExpired:
                     ru+=1
                     t_O+=1
@@ -73,8 +75,8 @@ for files in os.listdir(f"./{r}/temp/compile"):
                         fr.write(os.path.basename(foldername)+" TestCase"+fil[-5]+"\n")
                         fr.write(m.stderr.decode("utf-8")+"\n")
                         if(USE_GDB==True):
-                            m=subprocess.run(f"gdb -batch -ex 'r < {rep}/{fil}' -ex 'q' ./{r}/temp/compile/{files}",shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)# stderr is piped to remove error from console
-                            fr.write(m.stdout.decode("utf-8")[:-135]+"\n\n")
+                            m=subprocess.run(f"(cd {rep}  &&  exec gdb -batch -ex 'r < ./{fil}' -ex 'q' {P})",shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)# stderr is piped to remove error from console
+                            fr.write(m.stdout.decode("utf-8")[:-136]+"\n\n")
                             if m.stderr.decode("utf-8")!="":
                                 gdb_err=m.stderr.decode("utf-8")
                                 fr.write(f"GDB ERROR:{gdb_err}\n\n\n\n")
@@ -117,7 +119,16 @@ if os.stat(f"./{r}/testcase_mismatch_{sys.argv[1][0:6]}.txt").st_size==0:
     os.remove(f"./{r}/testcase_mismatch_{sys.argv[1][0:6]}.txt")
 
 
+if len(os.listdir(f"./{r}"))==0:
+    shutil.rmtree(f"./{r}")
+
+
+
+
 print(f'Checking complete with {c} Compile errors, {ru} Runtime errors({t_O} TIMEOUT errors) and {t} Test case mismatches')
-print(f'Check "{r}" folder for detailed report')
+if (c+ru+t)!=0:
+    print(f'Check "{r}" folder for detailed report')
+else:
+    print("Great Work!!! No errors for you :D")
 print("Happy Coding :)")
 
