@@ -124,7 +124,7 @@ for  foldername,subfolders,filenames in os.walk(f"./{r}/temp/out"):
             for fil in filenam:
                 if fil==filename and os.path.basename(folder)==os.path.basename(foldername):
                     rep=folder.replace(" ", "\\ ")
-                    k=subprocess.run(f"diff -Z   {foldername}/{filename} {rep}/{fil}",shell=True,stdout=subprocess.PIPE)
+                    k=subprocess.run(f"diff -Z --label 'Actual Output' --label 'Expected Output'  -c   {foldername}/{filename} {rep}/{fil}",shell=True,stdout=subprocess.PIPE)
                     if k.stdout.decode("utf-8")!="":
                         t+=1
                         ft.write(os.path.basename(foldername)+" TestCase"+fil[-5]+"\n\n")
@@ -146,7 +146,8 @@ if os.stat(f"./{r}/runtime_error_{sys.argv[1][0:6]}.txt").st_size==0:
 
 if os.stat(f"./{r}/testcase_mismatch_{sys.argv[1][0:6]}.txt").st_size==0:
     os.remove(f"./{r}/testcase_mismatch_{sys.argv[1][0:6]}.txt")
-
+else :
+    print(f"Ignore 'No newline at end of file' error in testcase_mismatch_{sys.argv[1][0:6]}.txt")
 
 if len(os.listdir(f"./{r}"))==0:
     shutil.rmtree(f"./{r}")
