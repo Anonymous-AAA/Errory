@@ -27,10 +27,21 @@ I have tested the script on WSL, similar behavior is expected on Linux and Cygwi
 
 * ASSGX_ROLLNO_FIRSTNAME.zip - Zip file containing c code (The filename should be according to the naming convention provided,X is any number)
 * Testcases.zip - Zip file containing test cases ( The name of the zipfile has no format restrictions)
-* Three options are given inside the python script file which the users can change : TIMEOUT, DELETE_TEMP_FILES and USE_GDB.
+* Four options are given inside the python script file which the users can change : TIMEOUT, DELETE_TEMP_FILES, USE_GDB and CHECK_REQUIREMENTS.
 * TIMEOUT : Stops execution of the program if it takes more than TIMEOUT seconds to execute.This is considered as a runtime error as an occurence of non terminating program.
 * DELETE_TEMP : If this option is set to True  it deletes the temporary files after execution, otherwise it will be  retained.
 * USE_GDB : By setting this variable to True , the program will use GDB during runtime errors to give more information about the error. If you haven't installed GDB, set this option to False.
+* CHECK_REQUIREMENTS : Raises error if any of the required packages is not installed. Set it to False it skip the check.
+
+#### Default options set in the script
+
+```Python
+TIMEOUT=30 #seconds
+DELETE_TEMP_FILES=True   
+USE_GDB=True             
+CHECK_REQUIREMENTS=True  
+```
+
 
 #### Shell Command for execution
 
@@ -40,7 +51,7 @@ python3 errory.py ASSG5_ROLLNO_FIRSTNAME.zip Testcases.zip
 
 ## Output
 
-Compilation errors,Runtime errors(Along with timeout errors) and Mismatching testcases are stored in different files in the error_ASSGX_ subfolder. Mismatching testcases output file is actually the output of the diff command in Linux. To understand the output refer to a tutorial like this [one](https://www.geeksforgeeks.org/diff-command-linux-examples/).
+Compilation errors,Runtime errors(Along with timeout errors) and Mismatching testcases are stored in different files in the error_ASSGX_ subfolder. Mismatching testcases output file is actually the output of the diff command in context mode (-c). To understand the output better refer to a tutorial like this one on [GeeksforGeeks](https://www.geeksforgeeks.org/diff-command-linux-examples/).
 
 ### Sample Output
 ```
@@ -56,7 +67,28 @@ Check "error_ASSG5_" folder for detailed report
 Happy Coding :)
 ```
 
-### Sample runtime error file generated with GDB. (Other error files for compile and testcase mismatch errors  are also generated similarly)
+
+### Sample compile_error file generated with the script.
+```
+ASSG2_RollNO_Name_1.c
+
+./error_ASSG2_/temp/ASSG2_RollNO_Name/ASSG2_RollNO_Name_1.c: In function ‘main’:
+./error_ASSG2_/temp/ASSG2_RollNO_Name/ASSG2_RollNO_Name_1.c:9:1: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘}’ token
+    9 | }
+      | ^
+
+
+
+ASSG2_RollNO_Name_4.c
+
+./error_ASSG2_/temp/ASSG2_RollNO_Name/ASSG2_RollNO_Name_4.c:63:1: error: expected identifier or ‘(’ before ‘}’ token
+   63 | }
+      | ^
+```
+
+
+
+### Sample runtime_error file generated with the script (USE_GDB=True).
 
 ```
 q1 TestCase2
@@ -103,6 +135,68 @@ Program received signal SIGSEGV, Segmentation fault.
 ```
 
 
+
+### Sample testcase_mismatch error file generated with the script. 
+
+```
+q3 TestCase1
+
+*** Actual Output
+--- Expected Output
+***************
+*** 1 ****
+- iii
+\ No newline at end of file
+--- 0 ----
+
+
+
+q3 TestCase2
+
+*** Actual Output
+--- Expected Output
+***************
+*** 1 ****
+! MiterJametBond
+\ No newline at end of file
+--- 1 ----
+! MierJameBond
+\ No newline at end of file
+
+
+
+q3 TestCase3
+
+*** Actual Output
+--- Expected Output
+***************
+*** 1 ****
+! eesbees
+\ No newline at end of file
+--- 1 ----
+! esbees
+\ No newline at end of file
+
+
+
+q3 TestCase4
+
+*** Actual Output
+--- Expected Output
+***************
+*** 1 ****
+! a
+\ No newline at end of file
+--- 1 ----
+! aa
+\ No newline at end of file
+
+```
+
+
+
+
+
 ## Improvements to be done
 * Suggest some improvements and collaborate
 
@@ -138,6 +232,11 @@ Program received signal SIGSEGV, Segmentation fault.
     * The temporary files and error files need not be deleted for every execution , it is handled by the code itself.
     * GCC argument added for including math.h library.
     * And other minor changes
+* 1.1
+    * Requirements for the script to run is checked before the script is executed.
+    * C programs accessing external files is supported.
+    * The testcase mismatch output uses context output format in diff which is more beginner friendly
+    * Other minor changes
 
 ## Any doubts on usage 
 Contact me at alenantonyme@gmail.com
