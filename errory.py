@@ -8,8 +8,37 @@ from shlex import quote
 TIMEOUT=30 #seconds      #Stops execution of the program if it takes more than TIMEOUT seconds to execute.This is considered as a runtime error as an occurence of non terminating program
 DELETE_TEMP_FILES=True   #Option True deletes the temporary files after execution, option False will retain the temporary files
 USE_GDB=True             #Use GDB for extra Runtime error info
+CHECK_REQUIREMENTS=True  #Raises error if any of the required packages is not installed.Set it to False to skip the check.
 
-print(f"Starting Execution \nThe options set are:\nTIMEOUT: {TIMEOUT} seconds\nDELETE_TEMP_FILES: {DELETE_TEMP_FILES}\nUSE_GDB: {USE_GDB}\nGenerating Report....\n")
+
+if CHECK_REQUIREMENTS==True:
+    try:
+        subprocess.run("gcc -v",shell=True,capture_output=True,check=True)
+    except subprocess.CalledProcessError:
+        print("ERROR: GCC is not installed.Please install it and rerun the script again.")
+        sys.exit()
+    try:
+        subprocess.run("diff -v",shell=True,capture_output=True,check=True)
+    except subprocess.CalledProcessError:
+        print("ERROR: diff is not installed.Please install it and rerun the script again.")
+        sys.exit()
+
+    if USE_GDB==True:
+        try:
+            subprocess.run("gdb -v",shell=True,capture_output=True,check=True)
+        except subprocess.CalledProcessError:
+            print("ERROR: GDB is not installed.Install it for more info on runtime errors")
+            tt=input("Continue without GDB(y/n)?")
+            if tt=='y':
+                USE_GDB=False
+            else :
+                sys.exit()
+
+
+
+
+
+print(f"\nStarting Execution \nThe options set are:\nTIMEOUT: {TIMEOUT} seconds\nDELETE_TEMP_FILES: {DELETE_TEMP_FILES}\nUSE_GDB: {USE_GDB}\nGenerating Report....\n")
 pgm=zipfile.ZipFile(sys.argv[1])
 tst=zipfile.ZipFile(sys.argv[2])
 reg=re.compile(r'in')
@@ -61,7 +90,7 @@ for files in os.listdir(f"./{r}/temp/compile"):
                     rep=foldername.replace(" ", "\\ ")
                     P=os.path.abspath(f"./{r}/temp/compile/{files}")
                     Q=os.path.abspath(f"./{r}/temp/out/q{files[-1]}/out{fil[2]}.txt")
-                    m=subprocess.run(f"(cd {rep}  &&  exec {P}<./{fil}>{Q})",shell=True,stderr=subprocess.PIPE,timeout=TIMEOUT)
+                    m=subprocess.run(f"{P}<./{fil}>{Q}",shell=True,stderr=subprocess.PIPE,timeout=TIMEOUT,cwd=rep)
                 except subprocess.TimeoutExpired:
                     ru+=1
                     t_O+=1
@@ -75,7 +104,7 @@ for files in os.listdir(f"./{r}/temp/compile"):
                         fr.write(os.path.basename(foldername)+" TestCase"+fil[-5]+"\n")
                         fr.write(m.stderr.decode("utf-8")+"\n")
                         if(USE_GDB==True):
-                            m=subprocess.run(f"(cd {rep}  &&  exec gdb -batch -ex 'r < ./{fil}' -ex 'q' {P})",shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)# stderr is piped to remove error from console
+                            m=subprocess.run(f"gdb -batch -ex 'r < ./{fil}' -ex 'q' {P}",shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,cwd=rep)# stderr is piped to remove error from console
                             fr.write(m.stdout.decode("utf-8")[:-136]+"\n\n")
                             if m.stderr.decode("utf-8")!="":
                                 gdb_err=m.stderr.decode("utf-8")
