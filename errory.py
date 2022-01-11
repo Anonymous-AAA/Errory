@@ -1,4 +1,4 @@
-#! python3
+#! /usr/bin/python3
 # errory.py - The quick and dirty python script to evaluate your programming assignments
 
 import zipfile,sys,subprocess,os,re,shutil
@@ -9,6 +9,32 @@ TIMEOUT=30 #seconds      #Stops execution of the program if it takes more than T
 DELETE_TEMP_FILES=True   #Option True deletes the temporary files after execution, option False will retain the temporary files
 USE_GDB=True             #Use GDB for extra Runtime error info
 CHECK_REQUIREMENTS=True  #Raises error if any of the required packages is not installed.Set it to False to skip the check.
+
+
+
+if len(sys.argv)<3 :
+    print("Usage: errory.py <ASSGX_B20XXXXCS_NAME.zip> <Testcases.zip>")
+    sys.exit()
+
+
+
+
+
+
+
+try:
+    pgm=zipfile.ZipFile(sys.argv[1])
+except FileNotFoundError:
+    print(f"Error: {sys.argv[1]} does not exist.")
+    sys.exit()
+try:
+    tst=zipfile.ZipFile(sys.argv[2])
+except FileNotFoundError:
+    print(f"Error: {sys.argv[2]} does not exist.")
+    sys.exit()
+
+
+
 
 
 if CHECK_REQUIREMENTS==True:
@@ -39,8 +65,8 @@ if CHECK_REQUIREMENTS==True:
 
 
 print(f"\nStarting Execution \nThe options set are:\nTIMEOUT: {TIMEOUT} seconds\nDELETE_TEMP_FILES: {DELETE_TEMP_FILES}\nUSE_GDB: {USE_GDB}\nGenerating Report....\n")
-pgm=zipfile.ZipFile(sys.argv[1])
-tst=zipfile.ZipFile(sys.argv[2])
+
+
 reg=re.compile(r'in')
 r="error_"+sys.argv[1][0:6]
 shutil.rmtree(f"./{r}/temp",ignore_errors=True)
@@ -88,8 +114,8 @@ for files in os.listdir(f"./{r}/temp/compile"):
             if re.match(reg,fil) and os.path.basename(foldername)=="q"+files[-1]:
                 try:
                     rep=foldername.replace(" ", "\\ ")
-                    P=os.path.abspath(f"./{r}/temp/compile/{files}")
-                    Q=os.path.abspath(f"./{r}/temp/out/q{files[-1]}/out{fil[2]}.txt")
+                    P=os.path.abspath(f"./{r}/temp/compile/{files}").replace(" ", "\\ ")
+                    Q=os.path.abspath(f"./{r}/temp/out/q{files[-1]}/out{fil[2]}.txt").replace(" ", "\\ ")
                     m=subprocess.run(f"{P}<./{fil}>{Q}",shell=True,stderr=subprocess.PIPE,timeout=TIMEOUT,cwd=rep)
                 except subprocess.TimeoutExpired:
                     ru+=1

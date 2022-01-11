@@ -223,7 +223,7 @@ q3 TestCase4
     * The program now handles non terminating programs
     * Timeout and Delete options added
     * Error folder need not be deleted for every execution
-* 1.0
+* 1.0.0
     * Shell commands are refactored into python native code.
     * Added GDB support for better info on segmentation faults.
     * Code is rewritten in more readable format.
@@ -232,11 +232,14 @@ q3 TestCase4
     * The temporary files and error files need not be deleted for every execution , it is handled by the code itself.
     * GCC argument added for including math.h library.
     * And other minor changes
-* 1.1
+* 1.1.0
     * Requirements for the script to run is checked before the script is executed.
     * C programs accessing external files is supported.
     * The testcase mismatch output uses context output format in diff which is more beginner friendly
     * Other minor changes
+* 1.1.1
+    * Some bug fixes
+
 
 ## Any doubts on usage 
 Contact me at alenantonyme@gmail.com
